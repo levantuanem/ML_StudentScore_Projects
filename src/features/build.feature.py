@@ -2,22 +2,35 @@ import pandas as pd
 import joblib
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import OneHotEncoder
-import data
-
+from sklearn.model_selection import train_test_split 
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
 def build_feature():
-    data = pd.read_csv(r'D:\AI_Projects\ML_StudentScore_Projects\models\StudentsPerformance_clean.csv', sep=';')
-    x = data.drop(['math score', 'reading score', 'writing score'], axis=1)
-    y = data[['math score', 'reading score', 'writing score']]
-    return x, y
+    data = pd.read_csv(r"D:\AI_Projects\ML_StudentScore_Projects\data\processed\StudentsPerformance_processed.csv", sep=',')
+    print(data.columns.tolist())
+    target = "math_score"
+    x = data.drop(columns= [target])
+    y = data[target]
 
-categorical_cols = ["parental level of education", "lunch", "test preparation course"]
-encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
-encoded = encoder.fit_transform(data[categorical_cols])
-encoded_df = pd.DataFrame(encoded, columns=encoder.get_feature_names_out(categorical_cols))
-joblib.dump(encoded_df, "models/encoded.pkl")
+    numeric_features = ["gender", "reading_score", "writing_score"]
+    categorical_features = ["race_ethnicity", "parental_level_of_education", "lunch", "test_preparation_course"]
 
+    # Split data
+    x_train, x_test, y_train, y_test = train_test_split(x, y, train_size= 0.8,  random_state= 42)
+    numeric_transformer = Pipeline([
+        ("imputer", SimpleImputer(strategy="mean")),
+        ("scaler", StandardScaler())
+    ])
+
+    categorical_transformer = Pipeline([
+        ("imputer", SimpleImputer(strategy="most_frequent")),
+        ("encoder", OneHotEncoder(handle_unknown="ignore"))
+    ])
+
+    x_train[['reading_score', 'writing_score']] = (numeric_transformer.fit_transform(x_train[['reading_score', 'writing_score']]))
+    x_test[['reading_score', 'writing_score']] = (numeric_transformer.transform(x_test[['reading_score', 'writing_score']]))
+
+    return x_train, x_test, y_train, y_test
 
 if __name__ == "__main__":
-    x, y = build_feature()
-    print(x.head())
-    print(y.head())
+    x_train, x_test, y_train, y_test = build_feature()
