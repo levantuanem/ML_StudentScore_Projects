@@ -1,35 +1,60 @@
 import pandas as pd
 import joblib
-from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split 
+from sklearn.preprocessing import (StandardScaler, OneHotEncoder, OrdinalEncoder)
 from sklearn.impute import SimpleImputer
+from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
+
 def build_feature():
     data = pd.read_csv(r"D:\AI_Projects\ML_StudentScore_Projects\data\processed\StudentsPerformance_processed.csv", sep=',')
-    print(data.columns.tolist())
     target = "math_score"
     x = data.drop(columns= [target])
     y = data[target]
 
-    numeric_features = ["gender", "reading_score", "writing_score"]
-    categorical_features = ["race_ethnicity", "parental_level_of_education", "lunch", "test_preparation_course"]
+    # Khai báo các nhóm columns
+    numeric_features = ["reading_score", "writing_score"]
+    ordinal_features = ["parental_level_of_education"]
+    onehot_features = ["gender", "race_ethnicity", "lunch", "test_preparation_course"]
 
     # Split data
     x_train, x_test, y_train, y_test = train_test_split(x, y, train_size= 0.8,  random_state= 42)
-    numeric_transformer = Pipeline([
+
+    # Numeric pipeline
+    numeric_pipeline = Pipeline([
         ("imputer", SimpleImputer(strategy="mean")),
         ("scaler", StandardScaler())
+        ])
+
+    # Education pipeline
+    education_order = ["some high school", "high school", "some college", "associate's degree", "bachelor's degree",
+    "master's degree"]
+    education_pipeline = Pipeline([
+    ("imputer", SimpleImputer(strategy="most_frequent")),
+    ("ordinal", OrdinalEncoder(categories=[education_order]))
     ])
 
-    categorical_transformer = Pipeline([
-        ("imputer", SimpleImputer(strategy="most_frequent")),
-        ("encoder", OneHotEncoder(handle_unknown="ignore"))
+    # Onehot pipeline
+    categorical_pipeline = Pipeline([
+    ("imputer", SimpleImputer(strategy="most_frequent")),
+    ("onehot", OneHotEncoder(handle_unknown="ignore"))
     ])
 
-    x_train[['reading_score', 'writing_score']] = (numeric_transformer.fit_transform(x_train[['reading_score', 'writing_score']]))
-    x_test[['reading_score', 'writing_score']] = (numeric_transformer.transform(x_test[['reading_score', 'writing_score']]))
+    # Ghép bằng ColumnTransformer
+    preprocessor = ColumnTransformer(
+    transformers=[
+        ("num", numeric_pipeline, numeric_features),
+        ("edu", education_pipeline, ordinal_features),
+        ("cat", categorical_pipeline, onehot_features)
+    ])
 
+    # Fit
+    x_train = preprocessor.fit_transform(x_train)
+    x_test = preprocessor.transform(x_test)
+    # Save
+    joblib.dump(preprocessor,r"D:\AI_Projects\ML_StudentScore_Projects\models\preprocessor.pkl")
+    print("Preprocessor saved successfully!")
+    # 
     return x_train, x_test, y_train, y_test
 
 if __name__ == "__main__":
