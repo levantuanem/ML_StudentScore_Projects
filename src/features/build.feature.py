@@ -30,14 +30,14 @@ def build_feature():
     education_order = ["some high school", "high school", "some college", "associate's degree", "bachelor's degree",
     "master's degree"]
     education_pipeline = Pipeline([
-    ("imputer", SimpleImputer(strategy="most_frequent")),
-    ("ordinal", OrdinalEncoder(categories=[education_order]))
+    ("imputer", SimpleImputer(strategy="most_frequent", fill_value= "unknown" )),
+    ("encoder", OrdinalEncoder(categories=[education_order]))
     ])
 
     # Onehot pipeline
     categorical_pipeline = Pipeline([
-    ("imputer", SimpleImputer(strategy="most_frequent")),
-    ("onehot", OneHotEncoder(handle_unknown="ignore"))
+    ("imputer", SimpleImputer(strategy="most_frequent", fill_value= "unknown" )),
+    ("encoder", OneHotEncoder(handle_unknown="ignore"))
     ])
 
     # Ghép bằng ColumnTransformer
