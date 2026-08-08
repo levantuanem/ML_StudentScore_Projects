@@ -9,7 +9,8 @@ def tune_ridge():
     # Model chọn ra từ bước train
     model_ridge = Ridge()
     #  Hyperparameter cần tune
-    param_grid = {"alpha": [0.001, 0.01, 0.1, 1, 10, 100, 1000]}
+    param_grid = {"alpha": [0.001, 0.01, 0.1, 1, 10, 100, 1000],
+                  "fit_intercept": [True, False]}
     # Grid search
     grid_search = GridSearchCV(estimator=model_ridge, param_grid=param_grid, cv=5, scoring="r2", n_jobs=-1)
     # Tune trên training set
