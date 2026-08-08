@@ -15,7 +15,7 @@ def build_feature():
     # Khai báo các nhóm columns
     numeric_features = ["reading_score", "writing_score"]
     ordinal_features = ["parental_level_of_education"]
-    onehot_features = ["gender", "race_ethnicity", "lunch", "test_preparation_course"]
+    normal_features = ["gender", "race_ethnicity", "lunch", "test_preparation_course"]
 
     # Split data
     x_train, x_test, y_train, y_test = train_test_split(x, y, train_size= 0.8,  random_state= 42)
@@ -30,22 +30,22 @@ def build_feature():
     education_order = ["some high school", "high school", "some college", "associate's degree", "bachelor's degree",
     "master's degree"]
     education_pipeline = Pipeline([
-    ("imputer", SimpleImputer(strategy="most_frequent", fill_value= "unknown" )),
+    ("imputer", SimpleImputer(strategy="most_frequent", fill_value= "unknown")),
     ("encoder", OrdinalEncoder(categories=[education_order]))
     ])
 
     # Onehot pipeline
     categorical_pipeline = Pipeline([
-    ("imputer", SimpleImputer(strategy="most_frequent", fill_value= "unknown" )),
+    ("imputer", SimpleImputer(strategy="most_frequent", fill_value= "unknown")),
     ("encoder", OneHotEncoder(handle_unknown="ignore"))
     ])
 
     # Ghép bằng ColumnTransformer
     preprocessor = ColumnTransformer(
     transformers=[
-        ("num", numeric_pipeline, numeric_features),
-        ("edu", education_pipeline, ordinal_features),
-        ("cat", categorical_pipeline, onehot_features)
+        ("numeric", numeric_pipeline, numeric_features),
+        ("ordinal", education_pipeline, ordinal_features),
+        ("normal", categorical_pipeline, normal_features)
     ])
 
     # Fit
