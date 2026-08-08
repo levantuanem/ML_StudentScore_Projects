@@ -1,6 +1,6 @@
+from src.features.build_feature import build_feature
 import pandas as pd
 import joblib
-from src.features.build_feature import build_feature
 from sklearn.linear_model import(LinearRegression, Ridge, Lasso, ElasticNet)
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.tree import DecisionTreeRegressor
@@ -48,7 +48,7 @@ def train_model():
         print(f"R2  : {r2:.4f}")
 
     # =========================
-    # 4. Compare models
+    #  Compare models
     # =========================
     results_df = pd.DataFrame(results)
     # RMSE thấp hơn = tốt hơn
@@ -59,5 +59,6 @@ def train_model():
     print("======================================")
     print(results_df.to_string(index=False))
     return results_df
+
 if __name__  == "__main__":
     train_model()
