@@ -57,5 +57,10 @@ def build_feature():
     # 
     return x_train, x_test, y_train, y_test
 
+def transform_new_data(data):
+    preprocessor = joblib.load(r"D:\AI\_Projects**\M**L\_StudentScore\_Projects**\m**odels**\p**reprocessor.pkl")
+    X = preprocessor.transform(data)
+    return X
+
 if __name__ == "__main__":
     x_train, x_test, y_train, y_test = build_feature()
