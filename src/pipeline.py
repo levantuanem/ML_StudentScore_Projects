@@ -14,13 +14,13 @@ def main():
     # 2. Feature Engineering
     data = build_feature()
     # 3. Train
-    results = train_model(data)
+    results = train_model()
     # 4. Tune
     best_model = tune_ridge()
     # 5. Evaluate
-    evaluate_ridge(best_model, data)
+    evaluate_ridge()
     # 6. Predict
-    predict_student(best_model, data)
+    predict_student()
     return predict_student
 
 if __name__ == "__main__":
