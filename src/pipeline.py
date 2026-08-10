@@ -4,13 +4,13 @@ from src.models.train import train_model
 from src.models.tune import tune_ridge
 from src.models.evaluate import evaluate_ridge
 from src.models.predict import predict_student
-
+from pathlib import Path
 
 def main():
 
     # 1. Preprocess
-    input_path = "data/raw/StudentsPerformance.csv"
-    output_path = "data/processed/StudentsPerformance_clean.csv"
+    input_path = Path("data/raw/StudentsPerformance.csv")
+    output_path = Path("data/processed/StudentsPerformance_clean.csv")
     preprocess_data(input_path, output_path)
     # 2. Feature Engineering
     data = build_feature(output_path)
