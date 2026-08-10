@@ -7,7 +7,6 @@ from src.models.predict import predict_student
 from pathlib import Path
 
 def main():
-
     # 1. Preprocess
     input_path = Path("data/raw/StudentsPerformance.csv")
     output_path = Path("data/processed/StudentsPerformance_clean.csv")
@@ -20,7 +19,6 @@ def main():
     best_model = tune_ridge()
     # 5. Evaluate
     evaluate_ridge(best_model, data)
-
     # 6. Predict
     predict_student(best_model, data)
     return predict_student
