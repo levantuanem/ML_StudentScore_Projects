@@ -256,3 +256,23 @@ Thumbs.db
 .cache/
 huggingface_cache/
 transformers_cache/
+
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Model files
+*.pkl
+*.joblib
+
+# Processed data
+data/processed/
+
+# IDE
+.vscode/
