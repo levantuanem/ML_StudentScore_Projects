@@ -12,7 +12,7 @@ def main():
     output_path = Path("data/processed/StudentsPerformance_clean.csv")
     preprocess_data(input_path, output_path)
     # 2. Feature Engineering
-    data = build_feature(output_path)
+    data = build_feature()
     # 3. Train
     results = train_model(data)
     # 4. Tune
