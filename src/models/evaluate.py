@@ -3,7 +3,7 @@ from sklearn.metrics import (mean_absolute_error, mean_squared_error, r2_score)
 from src.features.build_feature import build_feature
 def evaluate_ridge():
     x_train, x_test, y_train, y_test = build_feature()
-    model = joblib.load(r"models/ridge\_best.pkl")
+    model = joblib.load(r"models/ridge_best.pkl")
     y_pred = model.predict(x_test)
     mae = mean_absolute_error(y_test, y_pred)
     mse = mean_squared_error(y_test, y_pred)
