@@ -3,7 +3,7 @@ import pandas as pd
 from src.features.build_feature import transform_new_data
 
 def predict_student():
-    model = joblib.load(r"D:\AI\_Projects\ML\StudentScore\Projects\models\ridge\best.pkl")
+    model = joblib.load(r"D:\AI\_Projects\ML\_StudentScore\_Projects\models\ridge\_best.pkl")
     X = transform_new_data(data)
     prediction = model.predict(X)
     return prediction
