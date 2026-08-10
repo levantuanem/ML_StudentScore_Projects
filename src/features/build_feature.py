@@ -58,7 +58,7 @@ def build_feature():
     return x_train, x_test, y_train, y_test
 
 def transform_new_data(data):
-    preprocessor = joblib.load(r"D:\AI\_Projects**\M**L\_StudentScore\_Projects**\m**odels**\p**reprocessor.pkl")
+    preprocessor = joblib.load(r"D:\AI\_Projects\ML\_StudentScore\_Projects\models\preprocessor.pkl")
     X = preprocessor.transform(data)
     return X
 
