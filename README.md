@@ -1,15 +1,9 @@
 # ML Student Score Prediction
-
 A Machine Learning project for predicting students' **math scores** based on demographic information, parental education, lunch type, test preparation, reading score, and writing score.
-
 ---
-
 ## 📌 Project Overview
-
 This project builds an end-to-end Machine Learning pipeline for predicting students' mathematics scores.
-
 The project follows a typical Machine Learning workflow:
-
 ```text
 Raw Data
    ↓
@@ -29,15 +23,11 @@ Model Evaluation
    ↓
 Prediction
 ```
-
 The project is organized into separate modules to make the workflow easier to maintain, reproduce, and extend.
-
 ---
-
 ## 🎯 Objectives
 
 The main objectives of this project are:
-
 - Explore and understand the dataset.
 - Clean and preprocess raw student data.
 - Handle missing values and invalid data.
@@ -49,15 +39,10 @@ The main objectives of this project are:
 - Evaluate the final model.
 - Predict mathematics scores for new students.
 - Build an end-to-end ML pipeline.
-
 ---
-
 ## 📊 Dataset
-
 The project uses the **Students Performance** dataset.
-
 The dataset contains information about students including:
-
 - Gender
 - Race/Ethnicity
 - Parental level of education
@@ -66,19 +51,13 @@ The dataset contains information about students including:
 - Reading score
 - Writing score
 - Math score
-
 ### Target Variable
-
 The target variable is:
-
 ```text
 math_score
 ```
-
 ### Features
-
 The features used to predict the mathematics score are:
-
 ```text
 gender
 race_ethnicity
@@ -88,15 +67,10 @@ test_preparation_course
 reading_score
 writing_score
 ```
-
 ---
-
 ## 🔍 Exploratory Data Analysis
-
 Exploratory Data Analysis (EDA) is performed before preprocessing to understand the raw dataset and identify potential data quality issues.
-
 The EDA includes:
-
 - Dataset shape
 - Column names
 - Data types
@@ -109,27 +83,18 @@ The EDA includes:
 - Score distributions
 - Feature relationships
 - Correlation analysis
-
 The EDA module is located at:
-
 ```text
 src/visualization/eda.py
 ```
-
 An EDA notebook is also available at:
-
 ```text
 notebooks/EDA.ipynb
 ```
-
 ---
-
 ## 🧹 Data Preprocessing
-
 The preprocessing stage prepares the raw dataset for Machine Learning.
-
 The preprocessing workflow includes:
-
 - Loading raw data
 - Handling missing values
 - Removing duplicate rows
@@ -138,57 +103,39 @@ The preprocessing workflow includes:
 - Removing invalid values
 - Renaming columns
 - Saving processed data
-
 The preprocessing module is located at:
-
 ```text
 src/data/preprocess.py
 ```
-
 ---
-
 ## ⚙️ Feature Engineering
-
 Feature engineering is implemented using Scikit-learn's:
-
 - `Pipeline`
 - `ColumnTransformer`
 - `SimpleImputer`
 - `StandardScaler`
 - `OrdinalEncoder`
 - `OneHotEncoder`
-
 ### Numerical Features
-
 The numerical features are:
-
 ```text
 reading_score
 writing_score
 ```
-
 The numerical preprocessing pipeline is:
-
 ```text
 SimpleImputer
       ↓
 StandardScaler
 ```
-
 Missing numerical values are handled using the mean.
-
 ---
-
 ### Ordinal Feature
-
 The following feature is treated as an ordinal variable:
-
 ```text
 parental_level_of_education
 ```
-
 The education levels are ordered as:
-
 ```text
 some high school
 high school
@@ -197,48 +144,34 @@ associate's degree
 bachelor's degree
 master's degree
 ```
-
 The preprocessing pipeline is:
-
 ```text
 SimpleImputer
       ↓
 OrdinalEncoder
 ```
-
 ---
-
 ### Categorical Features
-
 The following features are treated as nominal categorical variables:
-
 ```text
 gender
 race_ethnicity
 lunch
 test_preparation_course
 ```
-
 The preprocessing pipeline is:
-
 ```text
 SimpleImputer
       ↓
 OneHotEncoder
 ```
-
 Unknown categories are handled using:
-
 ```python
 handle_unknown="ignore"
 ```
-
 ---
-
 ## 🔀 Train/Test Split
-
 The dataset is divided into training and testing sets using:
-
 ```python
 train_test_split(
     x,
@@ -247,79 +180,46 @@ train_test_split(
     random_state=42
 )
 ```
-
 Therefore:
-
 - 80% of the data is used for training.
 - 20% of the data is used for testing.
-
 A fixed `random_state=42` is used to improve reproducibility.
-
 ---
-
 ## 🤖 Machine Learning Models
-
 The project compares multiple regression algorithms.
-
 ### Linear Models
-
 - Linear Regression
 - Ridge Regression
 - Lasso Regression
 - Elastic Net
-
 ### Distance-Based Model
-
 - K-Nearest Neighbors Regressor
-
 ### Tree-Based Models
-
 - Decision Tree Regressor
 - Random Forest Regressor
 - Gradient Boosting Regressor
 - Extra Trees Regressor
 - Hist Gradient Boosting Regressor
-
 ### Kernel-Based Model
-
 - Support Vector Regression (SVR)
-
 ---
-
 ## 📈 Model Evaluation
-
 The models are evaluated using four regression metrics:
-
 ### MAE
-
 Mean Absolute Error measures the average absolute difference between predicted and actual values.
-
 Lower is better.
-
 ### MSE
-
 Mean Squared Error measures the average squared prediction error.
-
 Lower is better.
-
 ### RMSE
-
 Root Mean Squared Error is the square root of MSE.
-
 Lower is better.
-
 ### R²
-
 R² measures how much of the variance in the target variable is explained by the model.
-
 Higher is better.
-
 ---
-
 ## 📊 Model Comparison
-
 The initial model comparison produced the following results:
-
 | Model | MAE | MSE | RMSE | R² |
 |---|---:|---:|---:|---:|
 | **Ridge** | **4.1806** | **28.7835** | **5.3650** | **0.8817** |
@@ -333,91 +233,60 @@ The initial model comparison produced the following results:
 | SVR | 5.3920 | 59.6312 | 7.7221 | 0.7549 |
 | Elastic Net | 6.3765 | 63.0632 | 7.9412 | 0.7408 |
 | Decision Tree | 6.3450 | 63.5850 | 7.9740 | 0.7387 |
-
 ---
-
 ## 🏆 Best Model
-
 Based on the initial model comparison, **Ridge Regression** achieved the best performance.
-
 ### Ridge Performance
-
 ```text
 MAE  : 4.1806
 MSE  : 28.7835
 RMSE : 5.3650
 R²   : 0.8817
 ```
-
 The model achieved an R² score of approximately:
-
 ```text
 88.17%
 ```
-
 This means the model explains approximately 88.17% of the variance in mathematics scores on the test set.
-
 ---
-
 ## 🎛️ Hyperparameter Tuning
-
 After comparing the models, Ridge Regression was selected for hyperparameter tuning.
-
 `GridSearchCV` was used to search for the best hyperparameters.
-
 The tuning process evaluated:
-
 ```text
 alpha
 fit_intercept
 ```
-
 ### Best Parameters
-
 ```python
 {
     "alpha": 0.1,
     "fit_intercept": True
 }
 ```
-
 ### Best Cross-Validation R²
-
 ```text
 0.8697
 ```
-
 The tuned Ridge model was then used for final evaluation and prediction.
-
 ---
-
 ## 🧪 Final Model Evaluation
-
 The tuned Ridge model achieved:
-
 ```text
 MAE  : 4.1818
 MSE  : 28.8168
 RMSE : 5.3681
 R²   : 0.8816
 ```
-
 The final evaluation result is very close to the initial Ridge model, indicating that the original Ridge configuration was already performing strongly.
-
 ---
-
 ## 🔮 Prediction
-
 The project also supports predictions for new students.
-
 New student data can be provided using:
-
 ```text
 data/raw/new_students_for_prediction.csv
 ```
-
 The prediction process is:
-
 ```text
 New Student Data
        ↓
@@ -431,25 +300,17 @@ Predict Math Score
        ↓
 Display Prediction
 ```
-
 The prediction module is located at:
-
 ```text
 src/models/predict.py
 ```
-
 ---
-
 ## 🔄 End-to-End Pipeline
-
 The entire workflow can be executed through:
-
 ```text
 src/pipeline.py
 ```
-
 The pipeline runs the main Machine Learning stages in sequence:
-
 ```text
 1. Load Raw Data
        ↓
@@ -467,13 +328,10 @@ The pipeline runs the main Machine Learning stages in sequence:
        ↓
 8. Predict New Students
 ```
-
 Run the complete pipeline with:
-
 ```bash
 python -m src.pipeline
 ```
-
 ---
 
 ## 📁 Project Structure
@@ -528,136 +386,83 @@ ML_StudentScore_Projects/
 ├── README.md
 └── requirements.txt
 ```
-
 > Model files such as `.pkl` and `.joblib`, processed datasets, raw datasets, Python cache files, and other generated artifacts are excluded from Git version control according to `.gitignore`.
-
 ---
-
 ## 🛠️ Tech Stack
-
 ### Programming Language
-
 - Python
-
 ### Data Processing
-
 - Pandas
 - NumPy
-
 ### Machine Learning
-
 - Scikit-learn
-
 ### Data Visualization
-
 - Matplotlib
 - Seaborn
-
 ### Model Persistence
-
 - Joblib
-
 ### Development & Version Control
-
 - Git
 - GitHub
 - Python Virtual Environment
-
 ---
-
 ## 📦 Installation
-
 ### 1. Clone the repository
-
 ```bash
 git clone https://github.com/levantuanem/ML_StudentScore_Projects.git
 ```
-
 ### 2. Navigate to the project
-
 ```bash
 cd ML_StudentScore_Projects
 ```
-
 ### 3. Create a virtual environment
-
 ```bash
 python -m venv .venv
 ```
-
 ### 4. Activate the virtual environment
-
 On Windows:
-
 ```bash
 .venv\Scripts\activate
 ```
-
 ### 5. Install dependencies
-
 ```bash
 pip install -r requirements.txt
 ```
-
 ---
-
 ## 🚀 Running the Project
-
 To run the complete Machine Learning pipeline:
-
 ```bash
 python -m src.pipeline
 ```
-
 To run EDA:
-
 ```bash
 python -m src.visualization.eda
 ```
-
 To run preprocessing:
-
 ```bash
 python -m src.data.preprocess
 ```
-
 ---
-
 ## 💾 Model Artifacts
-
 The project generates several artifacts during execution, such as:
-
 ```text
 models/preprocessor.pkl
 models/ridge_best.pkl
 ```
-
 These generated files are intentionally excluded from GitHub using `.gitignore`.
-
 They can be regenerated by running the corresponding training and feature engineering modules.
-
 ---
-
 ## 📌 Reproducibility
-
 The project uses:
-
 ```python
 random_state=42
 ```
-
 for the train/test split.
-
 This helps ensure that experiments can be reproduced using the same dataset and configuration.
-
 ---
-
 ## 🔧 Future Improvements
-
 Several improvements can be added in future versions.
-
 ### Machine Learning
-
 - More extensive hyperparameter tuning.
 - Cross-validation for all candidate models.
 - Additional regression algorithms.
@@ -665,68 +470,21 @@ Several improvements can be added in future versions.
 - Feature importance analysis.
 - Residual analysis.
 - Error analysis.
-
 ### Data
-
 - More advanced data validation.
 - Better handling of missing values.
 - More feature engineering.
 - Investigation of potential outliers.
-
 ### Engineering
-
 - Unit tests.
 - Automated testing.
 - CI/CD with GitHub Actions.
 - Docker containerization.
 - Configuration files for paths and parameters.
 - Logging instead of relying only on console output.
-
 ### Deployment
-
 - Build a REST API for prediction.
 - Create a web interface.
 - Deploy the model to a cloud platform.
 - Add model monitoring.
-
----
-
-## 📚 Project Learning Outcomes
-
-This project demonstrates practical knowledge of:
-
-- Python for Machine Learning
-- Pandas data manipulation
-- Data cleaning
-- Exploratory Data Analysis
-- Feature preprocessing
-- Numerical feature scaling
-- Categorical encoding
-- Ordinal encoding
-- Scikit-learn pipelines
-- ColumnTransformer
-- Regression algorithms
-- Model evaluation
-- Hyperparameter tuning
-- GridSearchCV
-- Model persistence with Joblib
-- End-to-end ML pipelines
-- Git and GitHub project organization
-
----
-
-## 👨‍💻 Author
-
-**Lê Văn Tuấn**
-
-Machine Learning Project — Student Score Prediction
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-See the `LICENSE` file for more information.
-
 ---
